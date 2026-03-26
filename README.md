@@ -2,13 +2,14 @@
 
 > **Boot anywhere. Pentest everything. Leave no trace.**
 
-A bootable USB drive combining **Kali Linux Live** with **AI-powered pentesting tools**: OpenCode, CLI Agent, and Kali MCP for portable, automated penetration testing.
+A bootable USB drive combining **Kali Linux Live** with **AI-powered pentesting tools**: OpenCode, CLI Agent, Kali MCP, and Shannon Plugin for autonomous penetration testing.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Kali](https://img.shields.io/badge/Kali-2025.1-blue)](https://kali.org)
 [![OpenCode](https://img.shields.io/badge/OpenCode-latest-green)](https://opencode.ai)
 [![CLI Agent](https://img.shields.io/badge/CLI%20Agent-v1.2.6-orange)](https://github.com/amranu/cli-agent)
 [![Kali MCP](https://img.shields.io/badge/Kali%20MCP-35%2B%20tools-red)](https://github.com/k3nn3dy-ai/kali-mcp)
+[![Shannon](https://img.shields.io/badge/Shannon-Plugin-blue)](https://github.com/vichhka-git/opencode-shannon-plugin)
 
 ---
 
@@ -20,19 +21,21 @@ Traditional pentesting workflow problems:
 |---------|---------------|
 | Tools scattered across machines | Single USB, everything pre-configured |
 | Manual, repetitive recon workflows | AI tools automate workflows |
-| Forgetting to document findings | Auto-documentation and memory files |
+| Forgetting to document findings | Auto-documentation and reports |
 | Leaving traces on client systems | Boot Live USB, nothing touches host disk |
-| API dependency for AI tools | CLI Agent works offline with Ollama |
-| Learning curve for tools | Kali MCP exposes 35+ tools via AI |
+| API dependency for AI tools | CLI Agent + Ollama work offline |
+| Learning curve for tools | Kali MCP + Shannon expose tools via AI |
+| Complex multi-stage attacks | Shannon handles autonomous pentesting |
 
 ---
 
 ## 📦 What You Get
 
 - **Full Kali Linux** - Every pentest tool (nmap, metasploit, burp, hashcat, etc.)
-- **OpenCode** - Modern AI CLI with MCP support, web UI, and multi-agent coordination
+- **OpenCode** - Modern AI CLI with plugins, MCP support, web UI
 - **CLI Agent** - Lightweight AI agent with local Ollama model support
-- **Kali MCP** - 35+ security tools exposed as MCP tools (network scanning, web testing, exploitation, etc.)
+- **Kali MCP** - 35+ security tools as MCP tools
+- **Shannon Plugin** - Autonomous pentesting with 600+ Docker tools + browser automation
 - **Persistence** - Your configs, workflows, and findings survive reboots
 - **Forensically Clean** - Remove USB, no trace on host (RAM only)
 
@@ -43,53 +46,48 @@ Traditional pentesting workflow problems:
 ### OpenCode (Cloud + Local)
 
 ```bash
-# Start OpenCode
-opencode
-
-# Open web interface
-opencode web
+opencode          # Start TUI
+opencode web      # Start web interface
 ```
 
-**Features:** TUI, web interface, MCP protocol, multi-agent, GitHub integration
+**Features:** TUI, web interface, MCP, plugins, multi-agent, GitHub integration
 
 ### CLI Agent (Local-First)
 
 ```bash
-# Activate environment
-source ~/cli-agent/.venv/bin/activate
-
-# Start with cloud API
-agent chat
-
-# Start with local Ollama (offline!)
-agent chat --model ollama:llama3
-
-# MCP server mode
-python mcp_server.py --stdio
+agent chat                              # Cloud API
+agent chat --model ollama:llama3        # Offline with Ollama
 ```
-
-**Features:** Works offline with Ollama, supports Claude/GPT/DeepSeek/Gemini
 
 ### Kali MCP (35+ Security Tools)
 
 ```
-# Direct tool usage via MCP
 /port_scan target=192.168.1.1 scan_type=quick
 /dns_enum domain=example.com
 /hydra_attack target=10.0.0.1 service=ssh
-/payload_generate payload_type=reverse_shell platform=linux lhost=YOUR_IP lport=4444
-/recon_auto target=example.com depth=standard
 ```
 
-**Tool Categories:**
-| Category | Tools |
-|----------|-------|
-| Network Scanning | port_scan, network_discovery, dns_enum |
-| Web Testing | web_enumeration, vulnerability_scan, spider_website |
-| Exploitation | exploit_search, payload_generate, reverse_shell |
-| Credentials | hydra_attack, credential_store, hash_identify |
-| Reporting | create_report, save_output, file_analysis |
-| Session | session_create, session_list, session_switch |
+### Shannon Plugin (Autonomous Pentesting)
+
+```bash
+/shannon-scan target=example.com        # Full autonomous pentest
+/shannon-recon target=example.com      # Reconnaissance only
+/shannon-report                        # Generate professional report
+```
+
+**Shannon Tools:**
+| Tool | Purpose |
+|------|---------|
+| `shannon_docker_init` | Start Docker container |
+| `shannon_recon` | Recon (nmap, subfinder, whatweb) |
+| `shannon_vuln_discovery` | Vulnerability scanning |
+| `shannon_browser` | Playwright browser testing |
+| `shannon_exploit` | Exploitation (authorized) |
+| `shannon_report` | Generate professional reports |
+| `shannon_idor_test` | IDOR vulnerability testing |
+| `shannon_upload_test` | File upload testing |
+
+**Shannon Bundled Tools:** nmap, sqlmap, nikto, nuclei, gobuster, ffuf, hydra, hashcat, gowitness, BrowserBruter, Playwright
 
 ---
 
@@ -134,6 +132,10 @@ kali-opencode-usb/
 │   ├── kali_mcp_server/      # MCP tools implementation
 │   ├── Dockerfile            # Docker container
 │   └── README.md             # Kali MCP docs
+├── opencode-shannon-plugin/   # Shannon Plugin (autonomous pentest)
+│   ├── src/                  # Plugin source code
+│   ├── Dockerfile             # Shannon Docker tools
+│   └── README.md             # Shannon docs
 ├── cli-agent/                # CLI Agent (from ~/cli-agent)
 ├── postinstall/
 │   ├── opencode-setup.sh     # First-boot setup
@@ -150,7 +152,7 @@ kali-opencode-usb/
 
 ## 🔧 MCP Configuration
 
-OpenCode is pre-configured with both MCP servers:
+OpenCode is pre-configured with MCP servers and plugins:
 
 ```jsonc
 // ~/.config/opencode/opencode.jsonc
@@ -166,7 +168,10 @@ OpenCode is pre-configured with both MCP servers:
       "command": ["~/kali-mcp/.venv/bin/python", "-m", "kali_mcp_server"],
       "enabled": true
     }
-  }
+  },
+  "plugin": [
+    "~/opencode-shannon-plugin"
+  ]
 }
 ```
 
@@ -232,6 +237,32 @@ OpenCode is pre-configured with both MCP servers:
 │  [Live ISO]  - Read-only Kali base system             │
 │  [Persist]   - /home/kali/                           │
 │     ├── .opencode/        - OpenCode config           │
+│     ├── .config/opencode/ - MCP + Plugin config        │
+│     ├── cli-agent/        - CLI Agent                 │
+│     ├── kali-mcp/         - Kali MCP Server           │
+│     ├── opencode-shannon/ - Shannon Plugin             │
+│     └── shannon-tools     - Docker image (600+ tools) │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           │ Boot on any x64 machine
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│              Your Portable Pentest Rig                  │
+│  • Full Kali toolset                                  │
+│  • OpenCode (cloud AI + orchestration)                │
+│  • CLI Agent (offline AI with Ollama)                │
+│  • Kali MCP (35+ security tools)                     │
+│  • Shannon (autonomous pentesting)                    │
+│  • Nothing touches host disk                           │
+└─────────────────────────────────────────────────────────┘
+```
+┌─────────────────────────────────────────────────────────┐
+│                    USB Drive                            │
+├─────────────────────────────────────────────────────────┤
+│  [EFI Boot]  - Kali bootloader                        │
+│  [Live ISO]  - Read-only Kali base system             │
+│  [Persist]   - /home/kali/                           │
+│     ├── .opencode/        - OpenCode config           │
 │     ├── .config/opencode/ - MCP servers config        │
 │     ├── cli-agent/        - CLI Agent                 │
 │     ├── kali-mcp/         - Kali MCP Server           │
@@ -270,6 +301,7 @@ Built with:
 - **[OpenCode](https://opencode.ai)** - Modern AI CLI
 - **[CLI Agent](https://github.com/amranu/cli-agent)** - MCP-enabled AI assistant
 - **[Kali MCP](https://github.com/k3nn3dy-ai/kali-mcp)** - 35+ security tools via MCP
+- **[Shannon Plugin](https://github.com/vichhka-git/opencode-shannon-plugin)** - Autonomous pentesting
 - **[Ollama](https://ollama.com)** - Local AI runtime
 
 ---
